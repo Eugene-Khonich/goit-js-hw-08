@@ -64,6 +64,8 @@ const images = [
   },
 ];
 
+const galleryList = document.querySelector('.gallery');
+
 const addCards = cards => {
   return `<li class="gallery-item">
   <a class="gallery-link" href="${cards.original}">
@@ -76,9 +78,17 @@ const addCards = cards => {
   </a>
 </li>`;
 };
-
 const galleryCards = images.map(imgInfo => addCards(imgInfo)).join('');
-
-const galleryList = document.querySelector('.gallery');
-
 galleryList.innerHTML = galleryCards;
+
+const onImgClick = e => {
+  if (e.target.nodeName === 'IMG') {
+    e.preventDefault();
+    const bigImg = basicLightbox.create(
+      `<img src="${e.target.dataset.source}">`
+    );
+    bigImg.show();
+  }
+};
+
+galleryList.addEventListener('click', onImgClick);
